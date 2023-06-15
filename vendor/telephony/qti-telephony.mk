@@ -19,7 +19,7 @@ PRODUCT_SOONG_NAMESPACES += \
 $(call inherit-product, vendor/qcom/opensource/dataservices/dataservices_vendor_product.mk)
 
 # IPACM
-ifneq (,$(filter 5.10, $(TARGET_KERNEL_VERSION)))
+ifneq (,$(filter 5.10 5.15, $(TARGET_KERNEL_VERSION)))
 PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr
 $(call inherit-product, vendor/qcom/opensource/data-ipa-cfg-mgr/ipacm_vendor_product.mk)
 else
@@ -51,6 +51,7 @@ PRODUCT_VENDOR_PROPERTIES += \
     persist.vendor.radio.procedure_bytes=SKIP \
     persist.vendor.radio.sib16_support=1
 
+ifneq (,$(filter 3.18 4.4 4.9 4.14 4.19 5.4, $(TARGET_KERNEL_VERSION)))
 ifeq ($(call is-board-platform-in-list, bengal holi),true)
 # Vendor property to enable fetching of QoS parameters via IQtiRadio HAL
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -61,6 +62,7 @@ ifeq ($(call is-board-platform-in-list, $(4_14_FAMILY) $(4_19_FAMILY) $(5_4_FAMI
 #property to enable single ims registration
 PRODUCT_PROPERTY_OVERRIDES += \
      persist.vendor.rcs.singlereg.feature=1
+endif
 endif
 
 # Permissions
